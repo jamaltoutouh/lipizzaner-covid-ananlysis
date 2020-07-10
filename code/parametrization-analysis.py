@@ -67,7 +67,24 @@ def create_boxplot(parameter, metric, parameter_name, metric_name):
     )
     plt.margins(x=0)
     plt.savefig('../figures/' + parameter + '-' + metric + '.png')
+    plt.savefig('../figures/' + parameter + '-' + metric + '.pdf')
     plt.show()
+
+def plot_inception_score_vs_time():
+    values = dataset[metrics]
+    score = list(values[metrics[0]].tolist())
+    time =  list(values[metrics[1]].tolist())
+
+    w, h = figaspect(3 / 4)
+    plt.style.use('seaborn-whitegrid')
+    f, ax = plt.subplots(figsize=(w, h))
+    plt.plot(score, time, 'o', color='black')
+    plt.xlabel('Inception score')
+    plt.ylabel('Execution time (minutes)')
+    plt.savefig('../figures/inceptrion-score_vs_execution-time.png')
+    plt.savefig('../figures/inceptrion-score_vs_execution-time.pdf')
+    plt.show()
+
 
 def statistical_analysis(parameter, metric, parameter_name, metric_name):
     results = get_dict_parameter_metric(parameter, metric)
@@ -101,6 +118,8 @@ for metric, metric_name in zip(metrics, metrics_name):
     for parameter, parameter_name in zip(parameters, parameters_name):
         statistical_analysis(parameter, metric, parameter_name, metric_name)
 
+
+plot_inception_score_vs_time()
 
 
 
